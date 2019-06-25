@@ -5,6 +5,10 @@ pub fn add_two(a: i32) -> i32 {
     a + 2
 }
 
+fn internal_adder(a: i32, b: i32) -> i32 {
+    a + b
+}
+
 pub fn greeting(name: &str) -> String {
     format!("Hello {}!", name)
 }
@@ -20,6 +24,11 @@ mod tests {
     // run `cargo test -- --ignored` to run ignored tests
     // run `cargo test one_hundred` to run matching tests
     use super::*;
+
+    #[test]
+    fn internal() {
+        assert_eq!(7, internal_adder(2, 5));
+    }
 
     #[test]
     fn should_equal_four() {
@@ -59,6 +68,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
     fn this_test_will_fail() {
         assert_eq!(5, prints_and_returns_10(4));
     }
