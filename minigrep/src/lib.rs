@@ -30,3 +30,33 @@ pub fn run(config: Config) -> Result<(), Box<Error>> {
 
     Ok(())
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn should_be_too_few_arguments() {
+        let args: Vec<String> = vec![String::from("tacos")];
+        let result = Config::new(&args);
+        assert!(result.is_err() && !result.is_ok());
+    }
+
+    #[test]
+    fn should_enough_arguments() {
+        let args: Vec<String> = vec![
+            String::from("minigrep"),
+            String::from("tacos"),
+            String::from("menu.txt"),
+        ];
+        let config = Config::new(&args);
+        assert!(config.is_ok());
+        let Config {
+            query: q,
+            filename: f,
+        } = config.unwrap();
+        assert_eq!("tacos", q);
+        assert_eq!("menu.txt", f);
+    }
+
+}
