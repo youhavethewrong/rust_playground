@@ -17,8 +17,11 @@ impl Config {
 
         let query = args[1].clone();
         let filename = args[2].clone();
-
-        let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+        let case_sensitive = if args.len() >= 4 {
+            args[3] != "y"
+        } else {
+            env::var("CASE_INSENSITIVE").is_err()
+        };
 
         Ok(Config {
             query,
@@ -89,15 +92,18 @@ mod test {
             String::from("minigrep"),
             String::from("tacos"),
             String::from("menu.txt"),
+            String::from("nah"),
         ];
         let config = Config::new(&args);
         assert!(config.is_ok());
         let Config {
             query: q,
             filename: f,
+            case_sensitive: b,
         } = config.unwrap();
         assert_eq!("tacos", q);
         assert_eq!("menu.txt", f);
+        assert_eq!(true, b);
     }
 
     #[test]
@@ -105,6 +111,7 @@ mod test {
         let config = Config {
             query: "tacos".to_string(),
             filename: "a-really-silly-filename-that-should-not-exist.txt".to_string(),
+            case_sensitive: false,
         };
         let result = run(config);
         assert!(result.is_err());
@@ -115,6 +122,7 @@ mod test {
         let config = Config {
             query: "tacos".to_string(),
             filename: "Cargo.toml".to_string(),
+            case_sensitive: true,
         };
         let result = run(config);
         assert!(result.is_ok());
