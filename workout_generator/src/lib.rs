@@ -60,4 +60,12 @@ mod test {
         let v = c.value("Pizza");
         assert_eq!(v, "Pizza");
     }
+
+    #[test]
+    fn can_use_captured_var() {
+        let x = 27;
+        let mut c = Cacher::new(|y| y * x);
+        let v = c.value(3);
+        assert_eq!(v, 81);
+    }
 }
