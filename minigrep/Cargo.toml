@@ -5,3 +5,9 @@ authors = ["ESC <erickcrager@northwesternmutual.com>"]
 edition = "2018"
 
 [dependencies]
+
+[profile.dev]
+opt-level = 0
+
+[profile.release]
+opt-level = 3
