@@ -1,5 +1,7 @@
 extern crate junk;
 
+use junk::List::{Cons, Nil};
+
 fn main() {
     println!("Main screen turn on!");
 
@@ -12,4 +14,6 @@ fn main() {
         println!("Got: {}", val);
     }
     println!("Woah I have {} in a Box!", x);
+
+    let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
 }

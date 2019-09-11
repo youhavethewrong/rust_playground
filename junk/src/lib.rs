@@ -1,3 +1,8 @@
+pub enum List {
+    Cons(i32, Box<List>),
+    Nil,
+}
+
 struct Counter {
     count: u32,
 }
