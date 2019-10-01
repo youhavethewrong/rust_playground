@@ -1,3 +1,21 @@
+use std::ops::Deref;
+
+struct CardboardBox<T>(T);
+
+impl<T> CardboardBox<T> {
+    fn new(x: T) -> CardboardBox<T> {
+        CardboardBox(x)
+    }
+}
+
+impl<T> Deref for CardboardBox<T> {
+    type Target = T;
+
+    fn deref(&self) -> &T {
+        &self.0
+    }
+}
+
 pub enum List {
     Cons(i32, Box<List>),
     Nil,
@@ -126,5 +144,11 @@ mod test {
                 },
             ]
         );
+    }
+
+    #[test]
+    fn put_13_in_a_box() {
+        let thirteen = CardboardBox::new(13);
+        assert_eq!(13, *thirteen);
     }
 }
