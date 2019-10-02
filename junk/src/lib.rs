@@ -16,6 +16,12 @@ impl<T> Deref for CardboardBox<T> {
     }
 }
 
+fn hello(name: &str) {
+    let greeting = format!("Hello, {}!", name);
+    println!("{}", greeting);
+    greeting
+}
+
 pub enum List {
     Cons(i32, Box<List>),
     Nil,
@@ -150,5 +156,12 @@ mod test {
     fn put_13_in_a_box() {
         let thirteen = CardboardBox::new(13);
         assert_eq!(13, *thirteen);
+    }
+
+    #[test]
+    fn cardboard_box_greeting() {
+        let cb = CardboardBox::new(String::from("moto"));
+        let greeting = hello(&cb);
+        assert_eq!("Hello, moto!", greeting);
     }
 }
