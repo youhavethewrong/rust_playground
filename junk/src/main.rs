@@ -1,5 +1,6 @@
 extern crate junk;
 
+use junk::CustomSmartPointer;
 use junk::List::{Cons, Nil};
 
 fn main() {
@@ -16,4 +17,12 @@ fn main() {
     println!("Woah I have {} in a Box!", x);
 
     let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
+
+    let c = CustomSmartPointer {
+        data: String::from("my stuff"),
+    };
+    let d = CustomSmartPointer {
+        data: String::from("other stuff"),
+    };
+    println!("CustomSmartPointers created.");
 }

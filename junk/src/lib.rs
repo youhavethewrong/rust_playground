@@ -1,5 +1,15 @@
 use std::ops::Deref;
 
+pub struct CustomSmartPointer {
+    pub data: String,
+}
+
+impl Drop for CustomSmartPointer {
+    fn drop(&mut self) {
+        println!("Dropping CustomSmartPointer with data `{}`!", self.data);
+    }
+}
+
 struct CardboardBox<T>(T);
 
 impl<T> CardboardBox<T> {
@@ -16,7 +26,7 @@ impl<T> Deref for CardboardBox<T> {
     }
 }
 
-fn hello(name: &str) {
+fn hello(name: &str) -> String {
     let greeting = format!("Hello, {}!", name);
     println!("{}", greeting);
     greeting
