@@ -2,6 +2,7 @@ extern crate junk;
 
 use junk::CustomSmartPointer;
 use junk::List::{Cons, Nil};
+use std::mem::drop;
 
 fn main() {
     println!("Main screen turn on!");
@@ -24,5 +25,10 @@ fn main() {
     let d = CustomSmartPointer {
         data: String::from("other stuff"),
     };
+    let e = CustomSmartPointer {
+        data: String::from("wow cool"),
+    };
     println!("CustomSmartPointers created.");
+    drop(e);
+    println!("^ this was dropped before the end of main.");
 }
