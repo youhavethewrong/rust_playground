@@ -1,4 +1,5 @@
 use std::ops::Deref;
+use std::rc::Rc;
 
 pub struct CustomSmartPointer {
     pub data: String,
@@ -33,7 +34,7 @@ fn hello(name: &str) -> String {
 }
 
 pub enum List {
-    Cons(i32, Box<List>),
+    Cons(i32, Rc<List>),
     Nil,
 }
 
