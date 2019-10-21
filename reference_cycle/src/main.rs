@@ -1,6 +1,13 @@
 use std::cell::RefCell;
 use std::rc::Rc;
+
 use List::{Cons, Nil};
+
+#[derive(Debug)]
+struct Node {
+    value: i32,
+    children: RefCell<Vec<Rc<Node>>>,
+}
 
 #[derive(Debug)]
 enum List {
@@ -39,4 +46,16 @@ fn main() {
     // Uncomment the next line to see that we have a cycle;
     // it will overflow the stack
     // println!("a next item = {:?}", a.tail());
+
+    let leaf = Rc::new(Node {
+        value: 3,
+        children: RefCell::new(vec![]),
+    });
+
+    let branch = Rc::new(Node {
+        value: 5,
+        children: RefCell::new(vec![Rc::clone(&leaf)]),
+    });
+
+    println!("branch dump: {:?}", branch);
 }
