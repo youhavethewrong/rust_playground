@@ -15,4 +15,12 @@ fn main() {
     }
 
     handle.join().unwrap();
+
+    let v = vec![1, 2, 3];
+
+    let second_handle = thread::spawn(move || {
+        println!("Here's a vector: {:?}", v);
+    });
+
+    second_handle.join().unwrap();
 }
