@@ -1,5 +1,5 @@
 use std::sync::mpsc;
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 
@@ -68,5 +68,24 @@ fn main() {
         *num = 6;
     }
 
-    println!("m = {:?}", m);
+    println!("Single mutex: m = {:?}", m);
+
+    let multi_counter = Arc::new(Mutex::new(0));
+    let mut multi_handles = vec![];
+
+    for _ in 0..10 {
+        let c = Arc::clone(&multi_counter);
+        let multi_handle = thread::spawn(move || {
+            let mut num = c.lock().unwrap();
+
+            *num += 1;
+        });
+        multi_handles.push(multi_handle);
+    }
+
+    for multi_handle in multi_handles {
+        multi_handle.join().unwrap();
+    }
+
+    println!("Multi mutex: counter = {}", *multi_counter.lock().unwrap());
 }
