@@ -1,7 +1,7 @@
 fn main() {
     let favorite_color: Option<&str> = None;
     let is_tuesday = false;
-    let age: Result<u8, _> = "34".parse();
+    let age: Result<u8, _> = "34?".parse();
 
     if let Some(color) = favorite_color {
         println!("Using your favorite color, {}, as the background", color);
@@ -25,5 +25,11 @@ fn main() {
 
     while let Some(top) = stack.pop() {
         println!("{}", top);
+    }
+
+    let v = vec!['a', 'b', 'c'];
+
+    for (index, value) in v.iter().enumerate() {
+        println!("{} is at index {}", value, index);
     }
 }
